@@ -1,0 +1,31 @@
+{
+  "name": "custom-control-common",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/animations": "~12.1.2",
+    "@angular/cdk": "^12.1.2",
+    "@angular/common": "~12.1.2",
+    "@angular/core": "~12.1.2",
+    "@angular/forms": "~12.1.2",
+    "@angular/material": "^12.1.2",
+    "@angular/platform-browser": "~12.1.2",
+    "@angular/platform-browser-dynamic": "~12.1.2",
+    "@angular/router": "~12.1.2",
+    "@iconify/icons-emojione": "^1.2.6",
+    "@iconify/icons-fa-brands": "^1.2.4",
+    "@iconify/icons-fa-solid": "^1.2.4",
+    "@iconify/icons-ic": "^1.2.13",
+    "@iconify/icons-logos": "^1.2.31",
+    "@mat-datetimepicker/core": "^7.0.1",
+    "@ngneat/until-destroy": "^8.1.4",
+    "@visurel/iconify-angular": "^11.0.0",
+    "date-fns": "^2.30.0",
+    "imask": "^6.6.1",
+    "lodash.clonedeep": "^4.5.0",
+    "moment": "^2.29.4",
+    "odata-query": "^6.7.1"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}

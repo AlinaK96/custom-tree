@@ -1,0 +1,60 @@
+<div class="flex-container">
+  <label class="file-uploader">
+    <input type="file"
+      class="file-uploader__file"
+      [accept]="accept | lowercase"
+      (change)="prepareFileToUpload($event)"
+      [multiple]="multiple"
+      [disabled]="isDisabled"
+      #fileInput>
+    <button [disabled]="isDisabled"
+      mat-stroked-button
+      class="file-uploader__button"
+      (click)="fileInput.click()"
+      type="button">
+      <mat-icon [icIcon]="icons.icUploadIcon"></mat-icon>
+      <span>{{ placeholder }}</span>
+    </button>
+  </label>
+
+  <div class="flex-container">
+    <div class="file-uploader-name"
+      *ngIf="uploadedFileName; else emptyFileTemplate">
+      <ng-container *ngIf="!isLink; else linkTemplate">
+        <ng-container *ngIf="uploadedFiles.length > 1; else oneFile">
+          <span [matMenuTriggerFor]="menu">
+            {{ uploadedFiles.length | declensionNumber: ['файл', 'файла', 'файлов'] }}
+          </span>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item
+              *ngFor="let file of uploadedFiles; let idx = index">
+              <div class="file">
+                <div class="file-name">{{file.name}}</div>
+                <mat-icon (click)="removeFile(file, idx)"
+                  [icIcon]="icons.icClose"
+                  class="remove-file"></mat-icon>
+              </div>
+            </button>
+          </mat-menu>
+        </ng-container>
+        <ng-template #oneFile>
+          {{ uploadedFileName }}
+        </ng-template>
+      </ng-container>
+    </div>
+
+    <mat-icon *ngIf="canClear && isRemoveVisible"
+      (click)="removeFiles()"
+      [icIcon]="icons.icClose"
+      class="remove-file ml-1 mt-1"></mat-icon>
+
+    <ng-template #linkTemplate>
+      <a href="#"
+        target="_blank">{{ uploadedFileName }}</a>
+    </ng-template>
+
+    <ng-template #emptyFileTemplate>
+      <span>Выберите файл</span>
+    </ng-template>
+  </div>
+</div>

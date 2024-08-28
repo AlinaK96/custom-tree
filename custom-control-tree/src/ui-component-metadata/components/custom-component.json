@@ -1,0 +1,75 @@
+{
+  "Name": "Мой кастомный компонент",
+  "Type": "custom-pmdl-my-example",
+  "Properties": [{
+      "Name": "ItemsGroup",
+      "Type": "group",
+      "Caption": "Группы DS",
+      "Properties": [
+        {
+          "Name": "ItemsDataSourceName",
+          "Type": "datasource-selector",
+          "Caption": "Группы DS",
+          "Required": false
+        }
+      ]
+    },
+    {
+      "Name": "ItemsTypes",
+      "Type": "group",
+      "Caption": "Типы DS",
+      "Properties": [
+        {
+          "Name": "ItemsDataSourceName",
+          "Type": "datasource-selector",
+          "Caption": "Типы DS",
+          "Required": false
+        }
+      ]
+    }
+  ],
+  "AvailableValidators": [
+    "required",
+    "regExp"
+  ],
+  "AvailableActions": [
+    "ChangeProperty",
+    "SetVariable",
+    "SetValidator",
+    "DeleteValidator",
+    "ExecuteScript",
+    "ExecuteQuery",
+    "ExecuteFunction",
+    "OpenForm",
+    "CloseForm",
+    "Redirect",
+    "Update",
+    "SetDataSourceFilter",
+    "SetDataSourceSorting",
+    "SetDataSourcePagination",
+    "AddItems",
+    "DeleteItems",
+    "UpdateItems",
+    "ShowLoader",
+    "HideLoader",
+    "ShowMessage",
+    "SendLayoutEvent"
+  ],
+  "GenerateEvents": [
+    "Show",
+    "Hide",
+    {
+      "Event": "Change",
+      "Payload": {
+        "Type": "string"
+      }
+    },
+    "Enable",
+    "Disable",
+    "DataLoaded",
+    "DataLoadingError"
+  ],
+  "UseDataSource": true,
+  "IsFormControl": true,
+  "IsContainer": false
+}

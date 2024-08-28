@@ -1,0 +1,63 @@
+/* Vex Core */
+@import "./@vex/styles/core";
+@import "./assets/styles/theme";
+@import "./assets/styles/variables";
+
+/* You can add global styles to this file, and also import other style files */
+:root {
+    /* --color-primary: red; */
+}
+
+body {
+  background: white;
+}
+
+.outside-viewport-only-content {
+  text-overflow: unset;
+  word-break: break-all !important;
+  white-space: normal !important;
+}
+
+.mat-expansion-indicator::after {
+  border-color: $color-darkgrey;
+}
+
+.dx-filter-container .mat-dialog-container {
+  overflow: hidden;
+  padding: 8px;
+}
+
+.no-data-row {
+  color: $no-row-data-color;
+  font-size: 14px;
+}
+
+.icon-blue {
+  color: #00BCD4;
+}
+
+.dx-list-select-all-label {
+  padding-left: 20px;
+}
+
+.dx-list-item-content {
+  padding: 14px 16px 13px 0;
+}
+
+.dx-header-filter {
+  border: none;
+  background: $color-white;
+  outline: none;
+}
+
+.dx-datagrid .dx-datagrid-headers.dx-state-focused .dx-header-row td .dx-header-filter:focus, .dx-datagrid .dx-datagrid-headers.dx-state-focused .dx-header-row td:focus {
+  outline: none;
+}
+
+.dx-item-content.dx-treeview-item-content, .dx-treeview-select-all-item {
+  font-size: 16px;
+}
+
+.column-Name {
+  background: #ececec;
+}

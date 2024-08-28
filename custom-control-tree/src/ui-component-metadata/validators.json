@@ -1,0 +1,189 @@
+[
+  {
+    "Name": "required",
+    "Caption": "Обязательное поле",
+    "Properties": []
+  },
+  {
+    "Name": "minLength",
+    "AngularValidatorName": "minlength",
+    "Caption": "Минимальная длина текста",
+    "Properties": [
+      {
+        "Code": "value",
+        "Label": "Кол-во символов",
+        "Value": 3,
+        "Type": "number",
+        "Validators": [
+          {
+            "Name": "min",
+            "Value": [
+              1
+            ],
+            "Message": "Минимальное кол-во символов должно быть больше 0"
+          },
+          {
+            "Name": "max",
+            "Value": [
+              100
+            ],
+            "Message": "Минимальное кол-во символов не должно быть больше 100"
+          },
+          {
+            "Name": "integer",
+            "Value": [],
+            "Message": "Значение должно быть целым числом"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "maxLength",
+    "AngularValidatorName": "maxlength",
+    "Caption": "Максимальная длина текста",
+    "Properties": [
+      {
+        "Code": "value",
+        "Label": "Кол-во символов",
+        "Value": 3,
+        "Type": "number",
+        "Validators": [
+          {
+            "Name": "min",
+            "Value": [
+              1
+            ],
+            "Message": "Максимальное кол-во символов не может быть меньше 1"
+          },
+          {
+            "Name": "integer",
+            "Value": [],
+            "Message": "Значение должно быть целым числом"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "minValue",
+    "AngularValidatorName": "min",
+    "Caption": "Минимальное значение для чисел",
+    "Properties": [
+      {
+        "Code": "value",
+        "Label": "Значение",
+        "Value": 3,
+        "Type": "number",
+        "Validators": [
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "maxValue",
+    "AngularValidatorName": "max",
+    "Caption": "Максимальное значение для чисел",
+    "Properties": [
+      {
+        "Code": "value",
+        "Label": "Значение",
+        "Value": 3,
+        "Type": "number",
+        "Validators": [
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "minDate",
+    "Caption": "Минимальное значение для даты",
+    "Properties": [
+      {
+        "Code": "date",
+        "Label": "Значение",
+        "Type": "date"
+      }
+    ]
+  },
+  {
+    "Name": "maxDate",
+    "Caption": "Максимальное значение для даты",
+    "Properties": [
+      {
+        "Code": "date",
+        "Label": "Значение",
+        "Type": "date"
+      }
+    ]
+  },
+  {
+    "Name": "minDateTime",
+    "Caption": "Минимальное значение для даты и времени",
+    "Properties": [
+      {
+        "Code": "dateTime",
+        "Label": "Значение",
+        "Type": "datetime"
+      }
+    ]
+  },
+  {
+    "Name": "maxDateTime",
+    "Caption": "Максимальное значение для даты и времени",
+    "Properties": [
+      {
+        "Code": "dateTime",
+        "Label": "Значение",
+        "Type": "datetime"
+      }
+    ]
+  },
+  {
+    "Name": "minTime",
+    "Caption": "Минимальное значение для времени",
+    "Properties": [
+      {
+        "Code": "timeOnly",
+        "Label": "Значение",
+        "Type": "time"
+      }
+    ]
+  },
+  {
+    "Name": "maxTime",
+    "Caption": "Максимальное значение для времени",
+    "Properties": [
+      {
+        "Code": "timeOnly",
+        "Label": "Значение",
+        "Type": "time"
+      }
+    ]
+  },
+  {
+    "Name": "regExp",
+    "AngularValidatorName": "pattern",
+    "Caption": "Регулярное выражение",
+    "Properties": [
+      {
+        "Code": "value",
+        "Label": "Значение",
+        "Type": "string",
+        "Validators": [
+          {
+            "Name": "withoutSpaces",
+            "Value": [],
+            "Message": "Обязательное поле"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "integer",
+    "Caption": "Целое число",
+    "Properties": [
+    ]
+  }
+]

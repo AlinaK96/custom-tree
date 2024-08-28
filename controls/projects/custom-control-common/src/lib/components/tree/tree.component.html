@@ -1,0 +1,49 @@
+<mat-tree 
+  [dataSource]="dataSource" 
+  [treeControl]="treeControl"
+  class="inka-tree"
+>
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+    <button mat-icon-button disabled></button>
+    <ng-container *ngIf="selectable; else notSelectable">
+      <mat-checkbox
+        [checked]="isSelected(node)"
+        (change)="todoLeafItemSelectionToggle(node)"
+        color="primary"
+      >
+        {{ getNodeText(node) }}
+      </mat-checkbox>
+    </ng-container>
+
+    <ng-template #notSelectable>
+      {{ getNodeText(node) }}
+    </ng-template>
+  </mat-tree-node>
+
+  <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+    <div class="mat-tree-node">
+      <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+        </mat-icon>
+      </button>
+
+      <ng-container *ngIf="selectable; else notSelectable">
+        <mat-checkbox
+          [checked]="isSelected(node)"
+          (change)="todoLeafItemSelectionToggle(node)"
+          color="primary"
+        >
+          {{ getNodeText(node) }}
+        </mat-checkbox>
+      </ng-container>
+
+      <ng-template #notSelectable>
+        {{ getNodeText(node) }}
+      </ng-template>
+    </div>
+    <div class="inka-tree__nested-node" *ngIf="treeControl.isExpanded(node)" role="group">
+      <ng-container matTreeNodeOutlet></ng-container>
+    </div>
+  </mat-nested-tree-node>
+</mat-tree>

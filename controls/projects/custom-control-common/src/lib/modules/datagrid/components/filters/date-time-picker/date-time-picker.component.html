@@ -1,0 +1,52 @@
+<inka-common-row-filter-wrapper [operations]="operations"
+  (operationsChanged)="changeOperation($event)">
+  <div class="inka-date-time-picker">
+    <div class="inka-date-time-picker__control">
+      <div class="inka-date-time-picker__text-field break-normal">
+        <div class="inka-date-time-picker__input-container">
+          <input matInput
+            inkaRowFilterControl
+            [matDatetimepicker]="startPicker"
+            [formControl]="startDate"
+            [max]="endDate.value"
+            required
+            class="inka-date-time-picker__input"
+            autocomplete="false"
+            (focus)="changeFocus(true)"
+            (blur)="changeFocus(false)"
+            (ngModelChange)="onSelectedChange($event)" />
+        </div>
+        <mat-datetimepicker #startPicker
+          [type]="type"
+          [timeInterval]="5">
+        </mat-datetimepicker>
+      </div>
+      <mat-datetimepicker-toggle class="inka-date-time-picker__calendar-icon"
+        [for]="startPicker"></mat-datetimepicker-toggle>
+    </div>
+    <div class="inka-date-time-picker__control"
+      *ngIf="filterOperationType === 'between' || filterOperationType === 'notBetween'">
+      <div class="inka-date-time-picker__text-field break-normal">
+        <div class="inka-date-time-picker__input-container">
+          <input matInput
+            inkaRowFilterControl
+            [matDatetimepicker]="endPicker"
+            [formControl]="endDate"
+            [min]="startDate.value"
+            required
+            autocomplete="false"
+            class="inka-date-time-picker__input"
+            (focus)="changeFocus(true)"
+            (blur)="changeFocus(false)"
+            (ngModelChange)="onSelectedChange($event)" />
+        </div>
+        <mat-datetimepicker #endPicker
+          [type]="type"
+          [timeInterval]="5">
+        </mat-datetimepicker>
+      </div>
+      <mat-datetimepicker-toggle class="inka-date-time-picker__calendar-icon"
+        [for]="endPicker"></mat-datetimepicker-toggle>
+    </div>
+  </div>
+</inka-common-row-filter-wrapper>

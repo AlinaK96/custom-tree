@@ -1,0 +1,72 @@
+[
+  {
+    "Event": "Show",
+    "Name": "Показ элемента"
+  },
+  {
+    "Event": "Hide",
+    "Name": "Скрытие элемента"
+  },
+  {
+    "Event": "Enable",
+    "Name": "Активация элемента"
+  },
+  {
+    "Event": "Disable",
+    "Name": "Деактивация элемента"
+  },
+  {
+    "Event": "Change",
+    "Name": "Изменения значения элемента",
+    "Payload": "from-component"
+  },
+  {
+    "Event": "Select",
+    "Name": "Выбор элементов списка",
+    "Payload": "from-component"
+  },
+  {
+    "Event": "Click",
+    "Name": "Клик"
+  },
+  {
+    "Event": "SelectRow",
+    "Name": "Выбор строк",
+    "Payload": "from-component"
+  },
+  {
+    "Event": "SelectCells",
+    "Name": "Выделены ячейки",
+    "Payload": "from-component"
+  },
+  {
+    "Event": "ExecuteTableRowAction",
+    "Name": "Выполнение действия со строкой таблицы",
+    "Payload": "from-component"
+  },
+  {
+    "Event": "DataLoaded",
+    "Name": "Завершение загрузки данных",
+    "Payload": "from-component"
+  },
+  {
+    "Event": "ChangeData",
+    "Name": "Изменение данных",
+    "Payload": "from-component"
+  },
+  {
+    "Event": "Submit",
+    "Name": "Отправка данных",
+    "Payload": "from-component"
+  },
+  {
+    "Event": "DataLoadingError",
+    "Name": "Ошибка загрузки",
+    "Payload": "from-component"
+  },
+  {
+    "Event": "ChangeVariable",
+    "Name": "Изменение переменной",
+    "Payload": "from-component"
+    }
+]

@@ -1,0 +1,45 @@
+<inka-common-row-filter-wrapper [operations]="operations"
+  (operationsChanged)="setOperation($event)">
+  <ng-container [ngSwitch]="filterOperationType">
+    <ng-container *ngSwitchCase="'between' || 'notBetween'">
+
+      <div class="flex items-center"
+        [formGroup]="rangeControl">
+        <span class="mr-1">
+          от
+        </span>
+        <input inkaRowFilterControl
+          type="number"
+          autocomplete="off"
+          class="row-filter__text-field"
+          matInput
+          formControlName="start"
+          (focus)="changeFocus(true)"
+          (blur)="changeFocus(false)" />
+        <span class="mr-1">
+          до
+        </span>
+        <input inkaRowFilterControl
+          type="number"
+          autocomplete="off"
+          class="row-filter__text-field"
+          matInput
+          formControlName="end"
+          (focus)="changeFocus(true)"
+          (blur)="changeFocus(false)" />
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <div [formGroup]="rangeControl">
+        <input inkaRowFilterControl
+          type="number"
+          autocomplete="off"
+          class="row-filter__text-field"
+          matInput
+          formControlName="start"
+          (focus)="changeFocus(true)"
+          (blur)="changeFocus(false)" />
+      </div>
+    </ng-container>
+  </ng-container>
+</inka-common-row-filter-wrapper>

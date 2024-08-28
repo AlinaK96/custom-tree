@@ -1,0 +1,15 @@
+<ng-container *ngIf="webComponentLoaded$ | async" >
+  <div class="web-component-block">
+    <app-custom-control
+      tagName="inka-ui-custom-pmdl-my-example"
+      style="display: inline-block; width: 100%;"
+      [attributes]="{
+        Label: 'input field',
+        Placeholder: 'input placeholder',
+        ItemsDataSource: selectDatasource
+      }"
+      [errors]="errorsMessages | validationErrorsFilter : inputControlChecker"
+      [formControl]="inputControl"
+    ></app-custom-control>
+  </div>
+</ng-container>

@@ -1,0 +1,64 @@
+@import "../../styles/variables";
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  width: $full-width;
+}
+
+.file-uploader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__file {
+    display: none;
+  }
+
+  &__button {
+    background-color: var(--background-base);
+    margin-right: $indent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__content {
+    color: $color-blue;
+  }
+}
+
+.file-uploader-name {
+  color: $color-blue;
+}
+
+.remove-file {
+  width: $icon-button;
+  cursor: pointer;
+}
+
+.mat-menu-item {
+  .mat-icon-no-color {
+    color: $color-black;
+  }
+}
+
+.files-count {
+  margin-top: $indent;
+}
+
+.file {
+  display: flex;
+  align-items: center;
+
+  .remove-file {
+    margin-right: $null;
+  }
+}
+
+.file-name {
+  width: $menu-wudth;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}

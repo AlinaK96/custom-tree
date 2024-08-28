@@ -1,0 +1,9 @@
+<mat-progress-bar [class.visible]="loader.useRef('router').value$ | async"
+                  [value]="loader.useRef('router').value$ | async"
+                  class="progress-bar"
+                  mode="determinate"></mat-progress-bar>
+
+<mat-progress-bar [class.visible]="loader.useRef('http').value$ | async"
+                  [value]="loader.useRef('http').value$ | async"
+                  class="progress-bar"
+                  mode="determinate"></mat-progress-bar>

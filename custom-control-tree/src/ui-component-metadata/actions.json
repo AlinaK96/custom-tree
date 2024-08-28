@@ -1,0 +1,677 @@
+[
+  {
+    "Type": "ChangeProperty",
+    "Name": "Изменить свойство элемента",
+    "Properties": [
+      {
+        "Name": "PropertyName",
+        "Label": "Имя изменяемого свойства элемента",
+        "Type": "component-property"
+      },
+      {
+        "Name": "PropertyValue",
+        "Label": "Значение изменяемого свойства элемента",
+        "Type": "component-property-value",
+        "EventHandlers": [
+          {
+            "Event": "change-property",
+            "Sender": "PropertyName",
+            "Action": "set-property"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Type": "SetVariable",
+    "Name": "Установить переменную",
+    "Properties": [
+      {
+        "Name": "VariableName",
+        "Label": "Имя изменяемой переменной",
+        "Type": "variable-select",
+        "EventHandlers": [
+          {
+            "Event": "get-selected-variable",
+            "Sender": "VariableValue",
+            "Action": "send-selected-variable"
+          }
+        ]
+      },
+      {
+        "Name": "VariableValue",
+        "Label": "Значение изменяемой переменной",
+        "Type": "variable-value",
+        "EventHandlers": [
+          {
+            "Event": "change-variable",
+            "Sender": "VariableName",
+            "Action": "set-variable"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Type": "SetValidator",
+    "Name": "Установить/Изменить валидатор",
+    "Properties": [
+      {
+        "Name": "ValidatorName",
+        "Label": "Имя валидатора",
+        "Type": "validator-property"
+      },
+      {
+        "Name": "Properties",
+        "Type": "validator-properties",
+        "Label": "Свойства валидатора",
+        "EventHandlers": [
+          {
+            "Event": "change-validator",
+            "Sender": "ValidatorName",
+            "Action": "set-validator"
+          }
+        ]
+      },
+      {
+        "Name": "ErrorMessage",
+        "Label": "Сообщение об ошибке",
+        "Type": "localize-string"
+      }
+    ]
+  },
+  {
+    "Type": "DeleteValidator",
+    "Name": "Удалить валидатор",
+    "Properties": [
+      {
+        "Name": "ValidatorName",
+        "Label": "Имя валидатора",
+        "Type": "validator-property"
+      }
+    ]
+  },
+  {
+    "Type": "ExecuteScript",
+    "Name": "Выполнить скрипт",
+    "Properties": [
+      {
+        "Name": "Script",
+        "Label": "Скрипт",
+        "Type": "textarea"
+      }
+    ]
+  },
+  {
+    "Type": "ExecuteQuery",
+    "Name": "Выполнить http запрос",
+    "Properties": [
+      {
+        "Name": "Url",
+        "Label": "Url",
+        "Type": "string"
+      },
+      {
+        "Name": "Method",
+        "Label": "Метод",
+        "Type": "select",
+        "Items": [
+          {
+            "Text": "GET",
+            "Value": "GET"
+          },
+          {
+            "Text": "POST",
+            "Value": "POST"
+          },
+          {
+            "Text": "PUT",
+            "Value": "PUT"
+          },
+          {
+            "Text": "DELETE",
+            "Value": "DELETE"
+          }
+        ]
+      },
+      {
+        "Name": "Body",
+        "Label": "Тело запроса",
+        "Type": "string"
+      },
+      {
+        "Name": "Params",
+        "Label": "Параметры передаваемые в функцию",
+        "Type": "array",
+        "Properties": [
+          {
+            "Name": "0",
+            "Label": "Параметры передаваемые в функцию",
+            "Type": "object",
+            "Properties": [
+              {
+                "Name": "Name",
+                "Label": "Имя параметра",
+                "Type": "string"
+              },
+              {
+                "Name": "Value",
+                "Label": "Значение параметра",
+                "Type": "string"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "SuccessEvent",
+        "Label": "Имя события при успешном запросе",
+        "Type": "string"
+      },
+      {
+        "Name": "ErrorEvent",
+        "Label": "Имя события при ошибке",
+        "Type": "string"
+      }
+    ]
+  },
+  {
+    "Type": "ExecuteFunction",
+    "Name": "Вызов функции модуля",
+    "Properties": [
+      {
+        "Name": "ModuleCode",
+        "Label": "Код модуля",
+        "Type": "module-select",
+        "EventHandlers": [
+          {
+            "Event": "get-selected-module",
+            "Sender": "FunctionCode",
+            "Action": "send-selected-module"
+          },
+          {
+            "Event": "get-selected-module",
+            "Sender": "Name",
+            "Action": "send-selected-module"
+          }
+        ]
+      },
+      {
+        "Name": "FunctionCode",
+        "Label": "Код функции модуля",
+        "Type": "function-select",
+        "EventHandlers": [
+          {
+            "Event": "change-module",
+            "Sender": "ModuleCode",
+            "Action": "set-module"
+          },
+          {
+            "Event": "get-selected-function",
+            "Sender": "Name",
+            "Action": "send-selected-function"
+          }
+        ]
+      },
+      {
+        "Name": "Params",
+        "Label": "Параметры передаваемые в функцию",
+        "Type": "array",
+        "Properties": [
+          {
+            "Name": "0",
+            "Label": "",
+            "Type": "object",
+            "Properties": [
+              {
+                "Name": "Name",
+                "Label": "Имя параметра",
+                "Type": "function-param-select",
+                "EventHandlers": [
+                  {
+                    "Event": "change-module",
+                    "Sender": "ModuleCode",
+                    "Action": "set-module"
+                  },
+                  {
+                    "Event": "change-function",
+                    "Sender": "FunctionCode",
+                    "Action": "set-function"
+                  }
+                ]
+              },
+              {
+                "Name": "Value",
+                "Label": "Значение параметра",
+                "Type": "string"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "SuccessEvent",
+        "Label": "Имя события при успешном выполнении запроса",
+        "Type": "string"
+      },
+      {
+        "Name": "ErrorEvent",
+        "Label": "Имя события выполняемого при ошибке",
+        "Type": "string"
+      }
+    ]
+  },
+  {
+    "Type": "OpenForm",
+    "Name": "Открыть форму",
+    "Properties": [
+      {
+        "Name": "ModuleCode",
+        "Label": "Код модуля",
+        "Type": "module-select",
+        "EventHandlers": [
+          {
+            "Event": "get-selected-module",
+            "Sender": "FormCode",
+            "Action": "send-selected-module"
+          },
+          {
+            "Event": "get-selected-module",
+            "Sender": "Params",
+            "Action": "send-selected-module"
+          }
+        ]
+      },
+      {
+        "Name": "FormCode",
+        "Label": "Код формы",
+        "Type": "form-select",
+        "EventHandlers": [
+          {
+            "Event": "change-module",
+            "Sender": "ModuleCode",
+            "Action": "set-module"
+          },
+          {
+            "Event": "get-selected-form",
+            "Sender": "Params",
+            "Action": "send-selected-form"
+          }
+        ]
+      },
+      {
+        "Name": "InNewTab",
+        "Label": "Открытие в новой вкладке",
+        "Type": "boolean"
+      },
+      {
+        "Name": "Params",
+        "Label": "Параметры передаваемые в форму",
+        "Type": "form-properties",
+        "Required": false,
+        "Properties": [],
+        "EventHandlers": [
+          {
+            "Event": "change-module",
+            "Sender": "ModuleCode",
+            "Action": "set-module"
+          },
+          {
+            "Event": "change-form",
+            "Sender": "FormCode",
+            "Action": "set-form"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Type": "Update",
+    "Name": "Обновить данные",
+    "Properties": [
+      {
+        "Name": "DataSource",
+        "Label": "Источник данных",
+        "Type": "string"
+      }
+    ]
+  },
+  {
+    "Type": "SetDataSourceFilter",
+    "Name": "Изменить фильтрацию",
+    "Properties": [
+      {
+        "Name": "DataSource",
+        "Label": "Источник данных",
+        "Type": "datasource-selector",
+        "EventHandlers": [
+          {
+            "Event": "get-selected-datasource",
+            "Sender": "Filters",
+            "Action": "send-selected-datasource"
+          }
+        ]
+      },
+      {
+        "Name": "Filters",
+        "Label": "Фильтры",
+        "Type": "datasource-filter",
+        "Options": {},
+        "EventHandlers": [
+          {
+            "Event": "change-datasource",
+            "Sender": "DataSource",
+            "Action": "set-datasource"
+          }
+        ]
+
+      }
+    ]
+  },
+  {
+    "Type": "SetDataSourceSorting",
+    "Name": "Изменить сортировку",
+    "Properties": [
+      {
+        "Name": "DataSource",
+        "Label": "Источник данных",
+        "Type": "datasource-selector",
+        "EventHandlers": [
+          {
+            "Event": "get-selected-datasource",
+            "Sender": "Field",
+            "Action": "send-selected-datasource"
+          }
+        ]
+      },
+      {
+        "Name": "Sorting",
+        "Label": "Сортировка",
+        "Type": "array",
+        "Properties": [
+          {
+            "Name": "0",
+            "Label": "",
+            "Type": "object",
+            "Properties": [
+              {
+                "Name": "Field",
+                "Label": "Имя поля",
+                "Type": "datasource-field-selector",
+                "EventHandlers": [
+                  {
+                    "Event": "change-datasource",
+                    "Sender": "DataSource",
+                    "Action": "set-datasource"
+                  }
+                ]
+              },
+              {
+                "Name": "Direction",
+                "Label": "Направление сортировки",
+                "Type": "select",
+                "Items": [
+                  {
+                    "Text": "По возрастанию",
+                    "Value": "ASC"
+                  },
+                  {
+                    "Text": "По убыванию",
+                    "Value": "DESC"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Type": "SetDataSourcePagination",
+    "Name": "Изменить пагинацию",
+    "Properties": [
+      {
+        "Name": "DataSource",
+        "Label": "Источник данных",
+        "Type": "datasource-selector"
+      },
+      {
+        "Name": "Offset",
+        "Label": "Смещение в источнике данных",
+        "Type": "number",
+        "Options": {
+          "min": 0
+        },
+        "Validators": [
+          {
+            "Name": "min",
+            "Value": [
+              0
+            ],
+            "Message": "Смещение должно быть больше или равно 0"
+          },
+          {
+            "Name": "integer",
+            "Value": [],
+            "Message": "Смещение должно быть целым числом"
+          }
+        ]
+      },
+      {
+        "Name": "Limit",
+        "Label": "Количество записей",
+        "Type": "number",
+        "Options": {
+          "min": 1
+        },
+        "Validators": [
+          {
+            "Name": "min",
+            "Value": [
+              1
+            ],
+            "Message": "Количество записей должно быть больше 0"
+          },
+          {
+            "Name": "integer",
+            "Value": [],
+            "Message": "Количество записей должно быть целым числом"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Type": "Redirect",
+    "Name": "Открыть страницу",
+    "Properties": [
+      {
+        "Name": "Url",
+        "Label": "Адрес страницы которую нужно открыть",
+        "Type": "string"
+      },
+      {
+        "Name": "InNewTab",
+        "Label": "Открытие в новой вкладке",
+        "Type": "boolean"
+      }
+    ]
+  },
+  {
+    "Type": "AddItems",
+    "Name": "Добавить данные в локальном источнике данных",
+    "Properties": [
+      {
+        "Name": "DataSource",
+        "Label": "Источник данных",
+        "Type": "datasource-selector",
+        "EventHandlers": [
+          {
+            "Event": "get-selected-datasource",
+            "Sender": "Items",
+            "Action": "send-selected-datasource"
+          }
+        ]
+      },
+      {
+        "Name": "Clear",
+        "Label": "Очистить перед добавлением",
+        "Type": "boolean"
+      },
+      {
+        "Name": "Items",
+        "Label": "Данные",
+        "Type": "datasource-rows",
+        "Properties": [],
+        "Options": {},
+        "EventHandlers": [
+          {
+            "Event": "change-datasource",
+            "Sender": "DataSource",
+            "Action": "set-datasource"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Type": "UpdateItems",
+    "Name": "Изменить данные в локальном источнике данных",
+    "Properties": [
+      {
+        "Name": "DataSource",
+        "Label": "Источник данных",
+        "Type": "datasource-selector",
+        "EventHandlers": [
+          {
+            "Event": "get-selected-datasource",
+            "Sender": "Items",
+            "Action": "send-selected-datasource"
+          }
+        ]
+      },
+      {
+        "Name": "Items",
+        "Label": "Данные",
+        "Type": "datasource-rows",
+        "Properties": [],
+        "Options": {"withIndex": true},
+        "EventHandlers": [
+          {
+            "Event": "change-datasource",
+            "Sender": "DataSource",
+            "Action": "set-datasource"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Type": "DeleteItems",
+    "Name": "Удалить данные в локальном источнике данных",
+    "Properties": [
+      {
+        "Name": "DataSource",
+        "Label": "Источник данных",
+        "Type": "datasource-selector",
+        "EventHandlers": [
+          {
+            "Event": "get-selected-datasource",
+            "Sender": "Items",
+            "Action": "send-selected-datasource"
+          }
+        ]
+      },
+      {
+        "Name": "Items",
+        "Label": "Данные",
+        "Type": "datasource-rows",
+        "Properties": [],
+        "Options": {"withIndex": true},
+        "EventHandlers": [
+          {
+            "Event": "change-datasource",
+            "Sender": "DataSource",
+            "Action": "set-datasource"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Type": "CloseForm",
+    "Name": "Закрыть форму",
+    "Properties": []
+  },
+  {
+    "Type": "ShowLoader",
+    "Name": "Показать прелоадер",
+    "Properties": [
+      {
+        "Name": "Name",
+        "Label": "Имя лоадера",
+        "Type": "string"
+      },
+      {
+        "Name": "Message",
+        "Label": "Сообщение",
+        "Type": "string"
+      },
+      {
+        "Name": "isBlocked",
+        "Label": "Блокировка",
+        "Type": "boolean"
+      }
+    ]
+  },
+  {
+    "Type": "HideLoader",
+    "Name": "Скрыть прелоадер",
+    "Properties": [
+      {
+        "Name": "Name",
+        "Label": "Имя лоадера",
+        "Type": "string"
+      }
+    ]
+  },
+  {
+    "Type": "ShowMessage",
+    "Name": "Показать сообщение",
+    "Properties": [
+      {
+        "Name": "Type",
+        "Label": "Тип сообщения",
+        "Type": "select",
+        "Items": [
+          {
+            "Text": "Сообщение об ошибке",
+            "Value": "error"
+          },
+          {
+            "Text": "Информационное сообщение",
+            "Value": "info"
+          },
+          {
+            "Text": "Сообщение об успешном выполнении",
+            "Value": "success"
+          },
+          {
+            "Text": "Предупреждающее сообщение",
+            "Value": "warning"
+          },
+          {
+            "Text": "Тип сообщения по умолчанию",
+            "Value": "default-snackbar"
+          }
+        ]
+      },
+      {
+        "Name": "Message",
+        "Label": "Текст сообщения",
+        "Type": "string"
+      }
+    ]
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "vehicleId": 0,
+    "name": "TestVehicle1",
+    "lat": 13,
+    "lon": 16,
+    "speed": 13,
+    "course": 16,
+    "numberOfSatellites": 4,
+    "msgTime": "05.10.2023 04.20"
+  },
+  {
+    "vehicleId": 1,
+    "name": "TestVehicle2",
+    "lat": 15,
+    "lon": 16,
+    "speed": 50,
+    "course": 16,
+    "numberOfSatellites": 2,
+    "msgTime": "05.10.2023 04.21"
+  },
+  {
+    "vehicleId": 2,
+    "name": "TestVehicle3",
+    "lat": 17,
+    "lon": 16,
+    "speed": 70,
+    "course": 16,
+    "numberOfSatellites": 3,
+    "msgTime": "05.10.2023 04.22"
+  },
+  {
+    "vehicleId": 3,
+    "name": "TestVehicle4",
+    "lat": 19,
+    "lon": 16,
+    "speed": 20,
+    "course": 16,
+    "numberOfSatellites": 5,
+    "msgTime": "05.10.2023 04.23"
+  }
+]

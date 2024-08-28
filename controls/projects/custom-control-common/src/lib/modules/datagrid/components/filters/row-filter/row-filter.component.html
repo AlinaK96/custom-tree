@@ -1,0 +1,9 @@
+<inka-common-row-filter-wrapper [operations]="operations"
+  (operationsChanged)="setOperation($event)">
+  <input type="text"
+    class="row-filter__text-field"
+    inkaRowFilterControl
+    [formControl]="controlData"
+    (focus)="changeFocus(true)"
+    (blur)="changeFocus(false)">
+</inka-common-row-filter-wrapper>

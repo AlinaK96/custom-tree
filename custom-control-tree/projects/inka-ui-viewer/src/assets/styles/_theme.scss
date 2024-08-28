@@ -1,0 +1,117 @@
+@use '../../../../../node_modules/@angular/material/index' as mat;
+@import '../../../../../node_modules/@mat-datetimepicker/core/datetimepicker/datetimepicker-theme';
+
+@include mat.core();
+
+$md-primary: (
+  50 : #edeff8,
+  100 : #d1d7ee,
+  200 : #b2bde3,
+  300 : #93a2d8,
+  400 : #7c8ecf,
+  500 : #657ac7,
+  600 : #5d72c1,
+  700 : #5367ba,
+  800 : #495db3,
+  900 : #374aa6,
+  A100 : #f2f4ff,
+  A200 : #bfc9ff,
+  A400 : #8c9eff,
+  A700 : #7389ff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$md-accent: (
+  50 : #fee8f0,
+  100 : #fcc6da,
+  200 : #faa0c1,
+  300 : #f879a8,
+  400 : #f75d95,
+  500 : #f54082,
+  600 : #f43a7a,
+  700 : #f2326f,
+  800 : #f02a65,
+  900 : #ee1c52,
+  A100 : #ffffff,
+  A200 : #ffeff3,
+  A400 : #ffbccb,
+  A700 : #ffa2b7,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$md-warn: (
+  50 : #fee8e7,
+  100 : #fcc7c3,
+  200 : #faa19b,
+  300 : #f77b73,
+  400 : #f65f55,
+  500 : #f44337,
+  600 : #f33d31,
+  700 : #f1342a,
+  800 : #ef2c23,
+  900 : #ec1e16,
+  A100 : #ffffff,
+  A200 : #ffe9e9,
+  A400 : #ffb8b6,
+  A700 : #ff9f9c,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$palette-primary: mat.define-palette($md-primary);
+$palette-accent: mat.define-palette($md-accent);
+$palette-warn: mat.define-palette($md-primary);
+
+$my-theme: mat.define-light-theme((
+  color: (
+    primary: $palette-primary,
+    accent: $palette-accent,
+    warn: $palette-warn,
+  )
+));
+
+@include mat-datetimepicker-theme($my-theme);

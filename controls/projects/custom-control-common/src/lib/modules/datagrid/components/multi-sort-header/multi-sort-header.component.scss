@@ -1,0 +1,134 @@
+$sorted-text-color: rgba(0, 0, 0, .87);
+$header-text-color: rgba(0,0,0,.54);
+
+.mat-sort-header-container {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  height: 56px;
+  width: 100%;
+}
+
+.mat-sort-header-sorted {
+  color: var(--text-color, $sorted-text-color);
+}
+
+.mat-sort-header-disabled .mat-sort-header-container {
+  cursor: default;
+}
+
+.mat-sort-header-position-before {
+  flex-direction: row-reverse;
+}
+
+.mat-sort-header-content {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  margin-right: 3px;
+}
+
+.mat-sort-header__filter-icon {
+  margin-top: 3px;
+  color: $header-text-color;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.mat-sort-header-arrow {
+  height: 12px;
+  width: 12px;
+  min-width: 12px;
+  position: relative;
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.mat-sort-header-id {
+  margin-right: 3px;
+}
+
+.mat-sort-header-stem {
+  background: currentColor;
+  height: 10px;
+  width: 2px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+.mat-sort-header-indicator {
+  width: 100%;
+  height: 2px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.mat-sort-header-pointer-middle {
+  margin: auto;
+  height: 2px;
+  width: 2px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.mat-sort-header-pointer-left, .mat-sort-header-pointer-right {
+  background: currentColor;
+  width: 6px;
+  height: 2px;
+  position: absolute;
+  top: 0;
+}
+
+.mat-sort-header-pointer-left {
+  transform-origin: right;
+  left: 0;
+}
+
+.mat-sort-header-pointer-right {
+  transform-origin: left;
+  right: 0;
+}
+
+.mat-sort-context-trigger {
+  visibility: hidden;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.mat-menu-item {
+  height: auto;
+  padding: 3px 16px 4px;
+  line-height: 24px;
+}
+
+.sort-menu-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__icon {
+    height: 18px;
+    width: 18px;
+    margin-right: 24px;
+    display: block;
+  }
+}
+
+:host {
+  width: 100%;
+  height: 56px;
+}
+
+.dx-header-filter:not(.dx-header-filter-empty) {
+  color: #03a9f4;
+}
+
+.dx-icon-filter {
+  color: #9E9E9E;
+  background: transparent;
+}

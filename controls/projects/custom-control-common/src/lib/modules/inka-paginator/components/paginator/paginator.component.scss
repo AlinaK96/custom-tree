@@ -1,0 +1,61 @@
+@import "../../../../styles/variables";
+@tailwind base;
+
+:host ::ng-deep .mat-icon {
+  padding: 0;
+  margin: 0;
+}
+
+.inka-paginator {
+  padding: 13px 14px 13px 24px;
+  @apply flex items-center justify-between;
+  background: var(--inka-paginator-background-color, $color-white);
+  font-size: 12px;
+
+  &__action {
+    padding: 9px 12px;
+    line-height: 12px;
+    border-radius: 20px;
+
+    &:hover {
+      color: $color-black;
+      background: $color-lightergrey;
+    }
+
+    &:not(:last-child) {
+      margin-right: 5px;
+    }
+
+    &:disabled {
+      color: #cecece;
+      cursor: default;
+    }
+
+    &_active {
+      font-weight: 500;
+      background-color: #03a9f4;
+      color: #fff;
+      &:hover {
+        background: #03a9f4;
+      }
+    }
+
+    &_first:after {
+      content: ". . .";
+      @apply ml-6;
+    }
+
+    &_last:before {
+      content: ". . .";
+      @apply mr-6;
+    }
+
+    &_icon {
+      padding: 0;
+    }
+  }
+
+  &__navigation {
+    @apply flex items-center;
+  }
+}

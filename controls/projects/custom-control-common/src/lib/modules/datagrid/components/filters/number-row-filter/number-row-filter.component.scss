@@ -1,0 +1,52 @@
+@import "../../../../../styles/variables";
+
+.row-filter {
+  display: flex;
+  flex-direction: row;
+  outline: none;
+  height: 48px;
+  font-size: 14px;
+  color: #000;
+  width: 100%;
+  align-items: center;
+  box-sizing: border-box;
+  border-bottom: 2px solid transparent;
+  background: #fafafa;
+
+  &__text-field {
+    outline: none;
+    border: none;
+    flex: 1;
+    box-sizing: border-box;
+    width: calc(100% - 32px);
+    height: 100%;
+    background: transparent;
+  }
+
+  &_focused {
+    border-color: $datagrid-blue-color;
+  }
+
+  &:focus {
+    border-bottom: 2px solid $color-blue;
+  }
+
+  &__search-icon {
+    padding: 11px 8px;
+    margin-right: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% + 4px);
+    cursor: pointer;
+
+    &:hover {
+      background: rgba($color-black, 0.1);
+    }
+
+    mat-icon {
+      color: $datagrid-icon-color;
+    }
+  }
+}

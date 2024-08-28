@@ -1,0 +1,93 @@
+<div class="mat-sort-header-container"
+  [class.mat-sort-header-sorted]="_isSorted()"
+  [class.mat-sort-header-position-before]="arrowPosition === 'before'"
+  (contextmenu)="displayMenu($event)">
+
+  <div class="mat-sort-context-trigger"
+    [matMenuTriggerFor]="sortingMenu"
+    [style.left]="contextMenuPosition.x"
+    [style.top]="contextMenuPosition.y"></div>
+
+  <div class="mat-sort-header-content">
+    <ng-content></ng-content>
+  </div>
+
+  <!-- Disable animations while a current animation is running -->
+  <div class="mat-sort-header-arrow"
+    *ngIf="_renderArrow(); else sortableIndicator"
+    [@arrowOpacity]="_getArrowViewState()"
+    [@arrowPosition]="_getArrowViewState()"
+    [@allowChildren]="_getArrowDirectionState()"
+    (@arrowPosition.start)="_disableViewStateAnimation = true"
+    (@arrowPosition.done)="_disableViewStateAnimation = false">
+    <div class="mat-sort-header-stem"></div>
+    <div class="mat-sort-header">
+      <ng-container *ngIf="isAsc()">
+        <mat-icon [icIcon]="icons.ascIcon"></mat-icon>
+      </ng-container>
+      <ng-container *ngIf="isDesc()">
+        <mat-icon [icIcon]="icons.descIcon"></mat-icon>
+      </ng-container>
+      <!--      <span-->
+      <!--        [class.dx-icon-sortup]="getSortDirection() === 'asc'"-->
+      <!--        [class.dx-icon-sortdown]="getSortDirection() === 'desc'"-->
+      <!--      ></span>-->
+    </div>
+  </div>
+  <ng-template #sortableIndicator>
+    <ng-container *ngIf="!disabled">
+      <div class="mat-sort-header-arrow">
+        <div class="mat-sort-header-stem"></div>
+        <div class="mat-sort-header">
+          <mat-icon [icIcon]="icons.bothIcon"
+            [style.opacity]="0.5"></mat-icon>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+  <div *ngIf="_isSorted()"
+    class="mat-sort-header-id">{{_sortId()}}</div>
+  <div class="mat-sort-header__filter-icon"
+    *ngIf="displayFilterIcon"
+    (click)="toggleFilter($event)">
+    <span class="dx-icon-filter dx-header-filter"
+      [class.dx-header-filter-empty]="!isColumnHeaderFiltered"></span>
+  </div>
+</div>
+
+<mat-menu #sortingMenu="matMenu">
+  <button mat-menu-item
+    (click)="sort('asc')"
+    [disabled]="getSortDirection() === 'asc'">
+    <span class="sort-menu-item">
+      <span class="sort-menu-item__icon">
+        <i class="dx-icon-sortuptext"></i>
+      </span>
+      <span class="sort-menu-item__content">
+        Сортировать по возрастанию
+      </span>
+    </span>
+  </button>
+  <button mat-menu-item
+    (click)="sort('desc')"
+    [disabled]="getSortDirection() === 'desc'">
+    <span class="sort-menu-item">
+      <span class="sort-menu-item__icon">
+        <i class="dx-icon-sortdowntext"></i>
+      </span>
+      <span class="sort-menu-item__content">
+        Сортировать по убыванию
+      </span>
+    </span>
+  </button>
+  <button mat-menu-item
+    [disabled]="!_isSorted()"
+    (click)="sort('')">
+    <span class="sort-menu-item">
+      <span class="sort-menu-item__icon"></span>
+      <span class="sort-menu-item__content">
+        Очистить сортировку
+      </span>
+    </span>
+  </button>
+</mat-menu>

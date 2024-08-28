@@ -1,0 +1,34 @@
+<inka-common-row-filter-wrapper [operations]="operations"
+  (operationsChanged)="setOperation($event)">
+  <div class="inka-boolean-filter">
+    <div class="inka-boolean-filter__content">
+      {{controlValue$ | async}}
+    </div>
+    <div class="inka-boolean-filter__item">
+      <button mat-icon-button
+        cdkOverlayOrigin
+        #trigger="cdkOverlayOrigin"
+        (click)="setOpenStatus(true)">
+        <mat-icon [icIcon]="icons.icArrowDropDown"
+          class="inka-date-time-picker__calendar-icon"></mat-icon>
+      </button>
+    </div>
+  </div>
+</inka-common-row-filter-wrapper>
+
+
+<ng-template cdkConnectedOverlay
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpened"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  (backdropClick)="setOpenStatus(false)">
+  <mat-card>
+    <mat-selection-list [multiple]="false"
+      [formControl]="control">
+      <ng-container *ngFor="let option of filterData.data">
+        <mat-list-option [value]="option.value">{{option.title}}</mat-list-option>
+      </ng-container>
+    </mat-selection-list>
+  </mat-card>
+</ng-template>

@@ -1,0 +1,15 @@
+.inka-cell {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__content {
+    flex: 1;
+  }
+}
+
+.inka-cell_heading {
+  &_first {
+    padding-left: 40px;
+  }
+}

@@ -1,0 +1,45 @@
+@use 'sass:math';
+
+$color-black: #000;
+$color-white: #fff;
+$color-grey: #abb5be;
+$color-darkgrey: #6c757d;
+$color-lightergrey: #f5f5f5;
+$color-lightgrey: #d4d4d4;
+$color-brown: #c4c4c4;
+$color-blue: #657ac7;
+$color-red: #f8cecc;
+$color-lightred: #f8cecc;
+$color-purple: #e1d5e7;
+$color-green: #d5e8d4;
+$color-green-active: #63AF37;
+$color-yellow: #e5ce89;
+$divider-border-color: #e0e0e0;
+$border-color: #E0E0E0;
+$shadow-color: rgba(#414167, 0.2);
+$legend-entity: #B3DDD8;
+$legend-entity-with-link: #D0C1E6;
+$legend-entity-without-link: #FEC5C3;
+$legend-primary-key: #FFEBC1;
+$legend-unlinked-foreign-key: #FEC5C3;
+$legend-linked-foreign-key: #C9C9C9;
+$no-row-data-color: rgba(#000000, 0.4);
+$color-error: rgb(244,67,54, 1);
+
+$datagrid-icon-color: #9f9f9f;
+$datagrid-blue-color: #03a9f4;
+$datagrid-border-color: #e0e0e0;
+$inactive-row-background: #efefef;
+$dx-buttons-color: #03a9f4;
+$dx-buttons-hover-color: rgba(3,169,244,.08);
+
+// UI constructor varibals
+$full-width: 100%;
+$indent: 16px;
+$half-indent: math.div($indent, 2);
+$double-indent: $indent * 2;
+$divider-color: rgba(82, 63, 105, 0.06);
+$small-text: 12px;
+$icon-button: 24px;
+$layout-preview-width: 260px;
+$layout-preview-height: 160px;

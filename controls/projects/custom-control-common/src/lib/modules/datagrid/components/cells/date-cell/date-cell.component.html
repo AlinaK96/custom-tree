@@ -1,0 +1,6 @@
+<ng-container *ngIf="formatString; else defaultTemplate">
+  {{value|date:formatString}}
+</ng-container>
+<ng-template #defaultTemplate>
+  {{value|date}}
+</ng-template>

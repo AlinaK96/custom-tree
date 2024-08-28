@@ -1,0 +1,54 @@
+@import "../../../../../styles/variables";
+
+:host {
+  width: 100%;
+}
+
+.inka-row-filter-wrapper {
+  display: flex;
+  flex-direction: row;
+  outline: none;
+  height: 48px;
+  font-size: 14px;
+  color: var(--text-color, $color-black);
+  width: 100%;
+  align-items: center;
+  box-sizing: border-box;
+  border-bottom: 2px solid transparent;
+  background: var(--datagrid-filter-background-color, #fafafa);
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  &_focused {
+    border-color: $datagrid-blue-color;
+  }
+
+  &__search-icon {
+    padding: 11px 8px;
+    margin-right: 8px;
+    border: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% + 4px);
+    cursor: pointer;
+
+    &:hover {
+      background: rgba($color-black, 0.1);
+      cursor: default;
+    }
+
+    &_no-hover:hover {
+      background: transparent;
+    }
+
+    mat-icon {
+      color: $datagrid-icon-color;
+    }
+  }
+}

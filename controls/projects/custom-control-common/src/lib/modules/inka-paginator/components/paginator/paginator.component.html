@@ -1,0 +1,52 @@
+<div class="inka-paginator">
+  <div class="inka-paginator__page-size-options"
+    *ngIf="!hidePageSize && pageSizeOptions.length > 1">
+    <ng-container *ngFor="let size of pageSizeOptions">
+      <button class="inka-paginator__action inka-paginator__page-size-option"
+        [class.inka-paginator__action_active]="pageSize === size"
+        (click)="changePageSize(size)">{{size}}</button>
+    </ng-container>
+  </div>
+  <div class="inka-paginator__navigation">
+    <button class="inka-paginator__action inka-paginator__action_icon"
+      [disabled]="_previousButtonsDisabled()"
+      (click)="previousPage()">
+      <mat-icon [icIcon]="icons.chevronLeft"></mat-icon>
+    </button>
+
+    <ng-container *ngIf="pages.length > 1; else firstOnlyPage">
+      <ng-container *ngFor="let page of visiblePages; let isFirst = first; let isLast = last">
+        <button class="inka-paginator__action"
+          [class.inka-paginator__action_first]="isFirst && displayDots(page)"
+          [class.inka-paginator__action_last]="isLast && displayDots(page)"
+          [class.inka-paginator__action_active]="pageIndex === page"
+          (click)="changePage(page)">
+          {{page + 1}}
+        </button>
+      </ng-container>
+    </ng-container>
+    <ng-template #firstOnlyPage>
+      <button class="inka-paginator__action"
+        [class.inka-paginator__action_active]="pageIndex === 0"
+        (click)="changePage(0)">
+        1
+      </button>
+    </ng-template>
+    <button class="inka-paginator__action inka-paginator__action_icon"
+      [disabled]="_nextButtonsDisabled()"
+      (click)="nextPage()">
+      <mat-icon [icIcon]="icons.chevronRight"></mat-icon>
+    </button>
+  </div>
+  <div class="datagrid__statusRow">
+    <span class="datagrid__statusRow_selected">
+      <span class="datagrid__statusRow_selected_caption">Выделено:</span> <span class="datagrid__statusRow_selected_text">&nbsp;{{_selectedCount}}</span>&nbsp;
+    </span>
+    <span class="datagrid__statusRow_onpage">
+      <span class="datagrid__statusRow_onpage_caption">На странице:</span> <span class="datagrid__statusRow_onpage_text">&nbsp;{{_onPage}}</span>&nbsp;
+    </span>
+    <span class="datagrid__statusRow_total">
+      <span class="datagrid__statusRow_total_caption">Всего:</span> <span class="datagrid__statusRow_total_text">&nbsp;{{_totalLength}}</span>&nbsp;
+    </span>
+  </div>
+</div>

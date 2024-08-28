@@ -1,0 +1,226 @@
+<div class="datagrid"
+  *ngIf="datagridService.datasource && columnsItems$ | async as gridColumns">
+  <div class="datagrid__content"
+    [style.max-height]="height">
+    <table class="datagrid__table"
+      mat-table
+      [dataSource]="datagridService.datasource"
+      multiTemplateDataRows
+      [actives]="initialSort"
+      [directions]="initialSortDirections"
+      inkaUiMultiSort
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="handleColumnDrop($event)">
+      <ng-container matColumnDef="checkbox"
+        *ngIf="selectable"
+        sticky>
+        <th mat-header-cell
+          *matHeaderCellDef
+          [style.max-width.px]="20"
+          [style.width.px]="20"
+          [style.min-width.px]="20">
+          <mat-checkbox (change)="toggleAll($event.checked)"
+            color="primary"
+            [id]="'mat-checkbox-all' | uniqueId"
+            [checked]="selectAllCheckBoxOn"
+            *ngIf="selected.isMultipleSelection()"></mat-checkbox>
+        </th>
+        <td mat-cell
+          *matCellDef="let item"
+          class="inka-datagrid__cell_select">
+          <ng-container *ngIf="item['isGroup'] == null">
+            <mat-checkbox color="primary"
+              [id]="'mat-checkbox' | uniqueId"
+              [checked]="isSelected(item)"
+              (change)="select(item)"></mat-checkbox>
+          </ng-container>
+        </td>
+      </ng-container>
+      <ng-container *ngFor="let column of columns$ | async; let isFirst = first; let i = index; let isLast=last; trackBy: columnTrackBy">
+        <ng-container [matColumnDef]="column.field"
+          [sticky]="column.sticky === 'Left'"
+          [stickyEnd]="column.sticky === 'Right'">
+          <th mat-header-cell
+            *matHeaderCellDef
+            inka-ui-multi-sort-header
+            [disabled]="column.sortingDisabled$ | async"
+            [displayFilterIcon]="false"
+            [style.maxWidth]="column.maxWidth"
+            [style.minWidth]="column.minWidth"
+            [style.width]="column.width"
+            [isColumnHeaderFiltered]="hasColumnHeaderFilterValue(column.field)"
+            [inkaUiResizableColumn]="column.resizable && !isLast"
+            [id]="column.field"
+            [index]="i"
+            [ngClass]="column.className"
+            (resized)="handleResize($event, column)"
+            class="inka-datagrid__cell_select"
+            cdkDrag
+            cdkDragLockAxis="x"
+            [cdkDragData]="column.field"
+            [cdkDragDisabled]="!columnReordering">
+            <inka-ui-heading-cell [allowHeaderFilter]="false"
+              [columnName]="column.field"
+              [isFirst]="isFirst"
+              [displayCellPadding]="true"
+              [modifyFilterCallback]="column.modifyHeaderFilterCallback"
+              [filterType]="column.headerFilterType"
+              [currentFilterValue]="getCurrentFilterValue(column.field)">
+              <ng-container [ngTemplateOutlet]="headerCellTemplate"
+                [ngTemplateOutletContext]="{
+                column: column,
+                isFirst: isFirst,
+                hasChildren: true
+              }"></ng-container>
+            </inka-ui-heading-cell>
+          </th>
+          <th mat-header-cell
+            *matHeaderCellDef
+            [style.maxWidth]="column.maxWidth"
+            [style.minWidth]="column.minWidth"
+            [style.width]="column.width"
+            [ngClass]="column.className">filter
+          </th>
+          <td mat-cell
+            *matCellDef="let item"
+            [ngClass]="column.className"
+            [attr.colspan]="item.isGroup ? this.visibleColumnsCount : null"
+            [attr.rowspan]="getRowSpanCount(item, column.field)"
+            [style.display]="(item.isGroup && this.isRowGrouping && !isFirst) || (getRowSpanDisplay(item, column.field) != null) ?  'none' : null">
+            <ng-container [ngTemplateOutlet]="cellTemplate"
+              [ngTemplateOutletContext]="{
+                $implicit: item,
+                column: column,
+                isFirst: isFirst
+              }">
+            </ng-container>
+          </td>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="selectable">
+        <ng-container [matColumnDef]="'checkbox_filter'">
+          <th mat-header-cell
+            *matHeaderCellDef></th>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngFor="let column of  gridColumns; trackBy: trackByFilter"
+        [matColumnDef]="column.field + '_filter'"
+        [sticky]="column.sticky === 'Left'"
+        [stickyEnd]="column.sticky === 'Right'">
+        <th mat-header-cell
+          *matHeaderCellDef>
+          <ng-container *ngIf="(getColumnFilterable(column))">
+            <inka-ui-row-filter-cell [filterComponent]="column.filterComponent"
+              [filterData]="column.getRowFilterData()"
+              [operations]="column.operations"
+              [columnType]="column.dataType"
+              (filterChanged)="setRowFilter(getRowFilter(column.field), $event)"></inka-ui-row-filter-cell>
+          </ng-container>
+        </th>
+      </ng-container>
+
+
+      <tr mat-header-row
+        *matHeaderRowDef="visibleColumns; sticky: stickyHeader"></tr>
+      <ng-container *ngIf="enableRowFilter">
+        <tr class="datagrid__filter-row"
+          mat-header-row
+          *matHeaderRowDef="visibleFilterColumns; sticky: stickyHeader"></tr>
+      </ng-container>
+      <tr mat-row
+        *matRowDef="let row; columns: visibleColumns"
+        (click)="clickRow(row)"
+        [ngClass]="rowClassCallback(row) + ' ' + rowClassName + ' ' + (getRowGroupColoring(row) == true ? 'datagrid__group-colored-row' : null) + ' ' + (row.isGroup == true ? 'datagrid__group-grouped-row' : null)"></tr>
+      <tr *matNoDataRow
+        class="mat-row">
+        <td [attr.colspan]="visibleColumns.length"
+          class="mat-cell">
+          {{noDataText}}
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="datagrid__paginator">
+    <inka-ui-paginator *ngIf="datagridService.datasource && pagination && displayPaginationFn(datagridService.datasource.size$.value)"
+      [pageSize]="datagridService.datasource.pageSize$ | async"
+      [pageSizeOptions]="pageOptions"
+      [length]="datagridService.datasource.size$ | async"
+      [onPage]="getPageRowsCount()"
+      [selectedCount]="getPageSelectedRowsCount()"
+      [totalLength]="datagridService.datasource.size$ | async"
+      [hidePageSize]="false"></inka-ui-paginator>
+  </div>
+</div>
+
+<ng-template #cellTemplate
+  let-item
+  let-column="column"
+  let-isFirst="isFirst">
+  <span class="inka-cell"
+    [ngClass]="item.isGroup ? 'inka-cell_left': 'inka-cell_' + column.align">
+    <ng-container *ngIf="isFirst && nested">
+      <button mat-icon-button
+        class="inka-cell__tree-trigger"
+        *ngIf="item.hasChildren; else emptyTemplate"
+        (click)="toggleItem(item)">
+        <mat-icon [icIcon]="item.isExpanded ? icons.arrowBottom : icons.arrowRight"></mat-icon>
+      </button>
+      <ng-template #emptyTemplate>
+        <button mat-icon-button
+          class="inka-cell__empty-trigger"></button>
+      </ng-template>
+    </ng-container>
+    <span class="inka-cell__content"
+      [class.inka-cell__content_no-wrap]="column.noTruncate || enableWordWrap"
+      [matTooltip]="item.data[column.field]"
+      matTooltipClass="outside-only-tooltip"
+      inkaUiOutsideViewportOnly>
+      <ng-container *ngIf="column.contentTemplate && !item.isGroup; else defaultCellValue">
+        <ng-container [ngTemplateOutlet]="column.contentTemplate.template"
+          [ngTemplateOutletContext]="{
+            data: item,
+            value: getRowData(item, column.field)
+          }"></ng-container>
+      </ng-container>
+      <ng-template #defaultCellValue>
+        <ng-container *ngIf="!item.isGroup">
+          <inka-ui-cell-hub [cellComponent]="column.cellComponent"
+            [value]="getRowData(item, column.field)"
+            [formatString]="column.formatString"></inka-ui-cell-hub>
+        </ng-container>
+        <ng-container *ngIf="item.isGroup"
+          #groupCellValue>{{getRowData(item, column.field)}}</ng-container>
+      </ng-template>
+    </span>
+  </span>
+</ng-template>
+
+<ng-template #headerCellTemplate
+  let-column="column"
+  let-isFirst="isFirst"
+  let-hasChildren="hasChildren">
+  <ng-container *ngIf="isArgField(column.field); else defaultCaption">
+    <span style="color: #ff0000">[ </span>{{column.caption}}<span style="color: #ff0000"> ]</span>
+    <ng-container *ngIf="displayCodeFieldInHeaders">
+      <span class="mat-header-cell__subHeader">
+        <br>
+        <span class="mat-header-cell__subHeader_text">
+          {{column.field}}
+        </span>
+      </span>
+    </ng-container>
+  </ng-container>
+  <ng-template #defaultCaption>
+    {{column.caption}}
+    <ng-container *ngIf="displayCodeFieldInHeaders">
+      <span class="mat-header-cell__subHeader">
+        <br>
+        <span class="mat-header-cell__subHeader_text">
+          {{column.field}}
+        </span>
+      </span>
+    </ng-container>
+  </ng-template>
+</ng-template>

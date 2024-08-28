@@ -1,0 +1,67 @@
+---
+
+variables:
+  GIT_DEPTH: 1
+  TEST_URL: https://inka-webcomponents-test.simbirsoft.dev
+  STAGE_URL: https://inka-webcomponents-stage.simbirsoft.dev
+  DEMO_URL: https://inka-webcomponents-demo.simbirsoft.dev
+
+include:
+  - project: 'inka/gitlab-ci'
+    ref: master
+    file: '/jobs/docker.yaml'
+  - project: 'inka/gitlab-ci'
+    ref: master
+    file: '/jobs/deploy-by-ansible.yaml'
+  - project: 'inka/gitlab-ci'
+    ref: master
+    file: '/jobs/global.yaml'
+  - project: 'inka/gitlab-ci'
+    ref: master
+    file: '/jobs/rules.yaml'
+  - project: 'inka/gitlab-ci'
+    ref: master
+    file: '/workflows/default.yaml'
+
+build:
+  variables:
+    DOCKERFILE: .deploy/docker/Dockerfile
+    DOCKER_BUILD_ARGS: >
+      --build-arg NPM_CONFIG_REGISTRY=$NPM_CONFIG_REGISTRY
+      --build-arg YARN_REGISTRY=$YARN_REGISTRY
+  extends:
+    - .build_docker_image
+    - .use-simbirsoft-managed-docker-runners
+    - .rules:on-base-branch-always
+
+release:
+  extends:
+    - .release_docker_image
+    - .rules:on-base-branch-always
+
+deploy_test:
+  variables:
+    DEPLOYMENT_ENV: test
+  environment:
+    url: $TEST_URL
+  extends:
+    - .deploy_docker_by_ansible
+    - .rules:on-test-branch-always
+
+deploy_stage:
+  variables:
+    DEPLOYMENT_ENV: stage
+  environment:
+    url: $STAGE_URL
+  extends:
+    - .deploy_docker_by_ansible
+    - .rules:on-stage-branch-manual
+
+deploy_demo:
+  variables:
+    DEPLOYMENT_ENV: demo
+  environment:
+    url: $DEMO_URL
+  extends:
+    - .deploy_docker_by_ansible
+    - .rules:on-master-branch-manual

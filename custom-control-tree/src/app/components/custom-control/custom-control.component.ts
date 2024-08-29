@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Injectable, Input, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Injectable, Input, Renderer2, ViewChild } from '@angular/core';
 import { BaseFormControlWebComponent, WebComponentDatasource } from 'custom-control-common';
 import { MapService } from '../../services/MapService';
 import { FormControl } from '@angular/forms';
@@ -42,6 +42,7 @@ interface ReturnModelItem {
   selector: 'inka-ui-custom-pmdl-my-example',
   templateUrl: './custom-control.component.html',
   styleUrls: ['./custom-control.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class MapCustomControl extends BaseFormControlWebComponent<string> {
@@ -55,23 +56,23 @@ export class MapCustomControl extends BaseFormControlWebComponent<string> {
   @ViewChild('treeContainer') treeContainer: ElementRef | undefined;
 
   groups: Group[] = [
-    { "Id": 1, "Name": "string [Г]", "EnterpriseId": 0, "ParentId": null },
-    { "Id": 2, "Name": "группа 1 [Г]", "EnterpriseId": 0, "ParentId": null },
-    { "Id": 3, "Name": "группа 1 [Г]", "EnterpriseId": 0, "ParentId": null },
-    { "Id": 7, "Name": "Группа №1 [Г]", "EnterpriseId": 4, "ParentId": null },
-    { "Id": 8, "Name": "Группа №2 [Г]", "EnterpriseId": 4, "ParentId": 7 },
-    { "Id": 9, "Name": "Группа №3 [Г]", "EnterpriseId": 4, "ParentId": 8 },
-    { "Id": 10, "Name": "Группа №4 [Г]", "EnterpriseId": 4, "ParentId": 9 },
-    { "Id": 11, "Name": "Группа №5 [Г]", "EnterpriseId": 4, "ParentId": 10 },
+    { "Id": 1, "Name": "string", "EnterpriseId": 0, "ParentId": null },
+    { "Id": 2, "Name": "группа 1", "EnterpriseId": 0, "ParentId": null },
+    { "Id": 3, "Name": "группа 1", "EnterpriseId": 0, "ParentId": null },
+    { "Id": 7, "Name": "Группа №1", "EnterpriseId": 4, "ParentId": null },
+    { "Id": 8, "Name": "Группа №2", "EnterpriseId": 4, "ParentId": 7 },
+    { "Id": 9, "Name": "Группа №3", "EnterpriseId": 4, "ParentId": 8 },
+    { "Id": 10, "Name": "Группа №4", "EnterpriseId": 4, "ParentId": 9 },
+    { "Id": 11, "Name": "Группа №5", "EnterpriseId": 4, "ParentId": 10 },
   ];
 
   types: Type[] = [
-    { "Id": 1, "Name": "string [Т]", "EnterpriseId": 4, "GroupId": 1 },
-    { "Id": 2, "Name": "string [Т]", "EnterpriseId": 4, "GroupId": 2 },
-    { "Id": 3, "Name": "string [Т]", "EnterpriseId": 4, "GroupId": 3 },
-    { "Id": 4, "Name": "string [Т]", "EnterpriseId": 4, "GroupId": 3 },
-    { "Id": 5, "Name": "string [Т]", "EnterpriseId": 4, "GroupId": 3 },
-    { "Id": 6, "Name": "Test [Т]", "EnterpriseId": 4, "GroupId": 3 }
+    { "Id": 1, "Name": "string", "EnterpriseId": 4, "GroupId": 1 },
+    { "Id": 2, "Name": "string", "EnterpriseId": 4, "GroupId": 2 },
+    { "Id": 3, "Name": "string", "EnterpriseId": 4, "GroupId": 3 },
+    { "Id": 4, "Name": "string", "EnterpriseId": 4, "GroupId": 3 },
+    { "Id": 5, "Name": "string", "EnterpriseId": 4, "GroupId": 11 },
+    { "Id": 6, "Name": "Test", "EnterpriseId": 4, "GroupId": 11 }
   ];
   
   tree: any[] = [];
@@ -157,15 +158,18 @@ export class MapCustomControl extends BaseFormControlWebComponent<string> {
     }, []);
   }
 
+
   handleGroupClick(id: number, group: any) {
     this.selectedId = id;
     this.returnModel = [{ type: 'group', id: id }];
+    this.emit("ClickItem", this.returnModel[0]);
     group.isExpanded = !group.isExpanded;
   }
 
   handleTypeClick(id: number) {
     this.selectedId = id;
     this.returnModel = [{ type: 'type', id: id }];
+    this.emit("ClickItem", this.returnModel[0]);
   }
 
   isSelected(id: number, type: 'group' | 'type'): boolean {
@@ -184,10 +188,5 @@ export class MapCustomControl extends BaseFormControlWebComponent<string> {
     this.returnModel = [];
   }
   
-
-  // setSelect(event: any) {
-  //   this.selectedItem = event.value.Id
-  //   this.emit("ChangeIcon", this.selectedItem); 
-  // }  
 
 }

@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Injectable, Input, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Injectable, Input, Renderer2, ViewChild } from '@angular/core';
 import { BaseFormControlWebComponent, WebComponentDatasource } from 'custom-control-common';
 import { MapService } from '../../services/MapService';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 interface IItemsDatasourceSetting {
@@ -21,6 +21,11 @@ export interface Type {
   Name: string;
   EnterpriseId: number;
   GroupId: number;
+  AggregateImageId: string | null;
+  'GroupId.Id': number;
+  "GroupId.Name": string;
+  "GroupId.EnterpriseId": number;
+  "GroupId.ParentId": number | null;
 }
 
 export interface TreeNode {
@@ -64,31 +69,15 @@ export class MapCustomControl extends BaseFormControlWebComponent<string> {
 
   @ViewChild('treeContainer') treeContainer: ElementRef | undefined;
 
-  groups: Group[] = [
-    { "Id": 1, "Name": "string", "EnterpriseId": 0, "ParentId": null },
-    { "Id": 2, "Name": "группа 1", "EnterpriseId": 0, "ParentId": null },
-    { "Id": 3, "Name": "группа 1", "EnterpriseId": 0, "ParentId": null },
-    { "Id": 7, "Name": "Группа №1", "EnterpriseId": 4, "ParentId": null },
-    { "Id": 8, "Name": "Группа №2", "EnterpriseId": 4, "ParentId": 7 },
-    { "Id": 9, "Name": "Группа №3", "EnterpriseId": 4, "ParentId": 8 },
-    { "Id": 10, "Name": "Группа №4", "EnterpriseId": 4, "ParentId": 9 },
-    { "Id": 11, "Name": "Группа №5", "EnterpriseId": 4, "ParentId": 10 },
-  ];
+  groups: Group[] = []
 
-  types: Type[] = [
-    { "Id": 1, "Name": "string", "EnterpriseId": 4, "GroupId": 1 },
-    { "Id": 2, "Name": "string", "EnterpriseId": 4, "GroupId": 2 },
-    { "Id": 3, "Name": "string", "EnterpriseId": 4, "GroupId": 3 },
-    { "Id": 4, "Name": "string", "EnterpriseId": 4, "GroupId": 3 },
-    { "Id": 5, "Name": "string", "EnterpriseId": 4, "GroupId": 11 },
-    { "Id": 6, "Name": "Test", "EnterpriseId": 4, "GroupId": 11 }
-  ];
+  types: Type[] = []
   
   tree: any[] = [];
   selectedId: number | null = null;
   returnModel: ReturnModelItem[] = [];
 
-  constructor(elementRef: ElementRef, renderer: Renderer2, mapService: MapService, private http: HttpClient) {
+  constructor(elementRef: ElementRef, renderer: Renderer2, mapService: MapService, private http: HttpClient, private cdr: ChangeDetectorRef) {
     super(elementRef, renderer);
     this.httpClient = http
     this.itemsGroup = new WebComponentDatasource<unknown>(elementRef.nativeElement, renderer);
@@ -107,20 +96,20 @@ export class MapCustomControl extends BaseFormControlWebComponent<string> {
 
 
   ngOnInit(): void {
-    this.itemsGroup.data$.subscribe((value) => {
-      if (value) {
-        console.log(value.Items)
+
+    combineLatest([
+      this.itemsGroup.data$,
+      this.itemsTypes.data$
+    ]).subscribe(([groupsData, typesData]) => {
+
+      if (groupsData && typesData) {
+        this.groups = groupsData.Items as Group[];
+        this.types = typesData.Items as Type[];
+
+        this.buildTree();
+        this.cdr.detectChanges();
       }
     });
-
-    this.itemsTypes.data$.subscribe((value) => {
-      if (value) {
-        console.log(value.Items)
-      }
-    });
-
-    this.buildTree();
-
   }
 
   buildTree() {
@@ -168,22 +157,21 @@ export class MapCustomControl extends BaseFormControlWebComponent<string> {
   }
 
 
-  handleGroupClick(id: number, group: any) {
+handleGroupClick(id: number, group: any) {
+  this.selectedId = id;
+  this.returnModel = [{ type: 'group', id: id, ParentId: group.ParentId }];
+  this.emit("ClickItem", this.returnModel[0]);
+  group.isExpanded = !group.isExpanded;
+}
+
+handleTypeClick(id: number) {
+  const type = this.types.find(t => t.Id === id);
+  if (type) {
     this.selectedId = id;
-    this.returnModel = [{ type: 'group', id: id, ParentId: group.ParentId }];
+    this.returnModel = [{ type: 'type', id: id, GroupId: type.GroupId }];
     this.emit("ClickItem", this.returnModel[0]);
-    group.isExpanded = !group.isExpanded;
   }
-  
-  handleTypeClick(id: number) {
-    const type = this.types.find(t => t.Id === id);
-    if (type) {
-      this.selectedId = id;
-      this.returnModel = [{ type: 'type', id: id, GroupId: type.GroupId }];
-      this.emit("ClickItem", this.returnModel[0]);
-    }
-  }
-  
+}
   isSelected(id: number, type: 'group' | 'type'): boolean {
     return this.returnModel.some(item => item.type === type && item.id === id);
   }

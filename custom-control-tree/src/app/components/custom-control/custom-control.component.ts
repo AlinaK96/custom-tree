@@ -29,10 +29,19 @@ export interface TreeNode {
   name: string;
 }
 
-interface ReturnModelItem {
-  type: 'group' | 'type';
+export interface ReturnModelItemGroup {
+  type: 'group';
   id: number;
+  ParentId: number | null; 
 }
+
+export interface ReturnModelItemType {
+  type: 'type';
+  id: number;
+  GroupId: number; 
+}
+
+export type ReturnModelItem = ReturnModelItemGroup | ReturnModelItemType;
 
 @Injectable({
   providedIn: 'root'
@@ -161,17 +170,20 @@ export class MapCustomControl extends BaseFormControlWebComponent<string> {
 
   handleGroupClick(id: number, group: any) {
     this.selectedId = id;
-    this.returnModel = [{ type: 'group', id: id }];
+    this.returnModel = [{ type: 'group', id: id, ParentId: group.ParentId }];
     this.emit("ClickItem", this.returnModel[0]);
     group.isExpanded = !group.isExpanded;
   }
-
+  
   handleTypeClick(id: number) {
-    this.selectedId = id;
-    this.returnModel = [{ type: 'type', id: id }];
-    this.emit("ClickItem", this.returnModel[0]);
+    const type = this.types.find(t => t.Id === id);
+    if (type) {
+      this.selectedId = id;
+      this.returnModel = [{ type: 'type', id: id, GroupId: type.GroupId }];
+      this.emit("ClickItem", this.returnModel[0]);
+    }
   }
-
+  
   isSelected(id: number, type: 'group' | 'type'): boolean {
     return this.returnModel.some(item => item.type === type && item.id === id);
   }

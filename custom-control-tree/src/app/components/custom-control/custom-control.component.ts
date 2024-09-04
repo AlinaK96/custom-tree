@@ -69,9 +69,9 @@ export class MapCustomControl extends BaseFormControlWebComponent<string> {
 
   @ViewChild('treeContainer') treeContainer: ElementRef | undefined;
 
-  groups: Group[] = []
+  groups = []
 
-  types: Type[] = []
+  types = []
   
   tree: any[] = [];
   selectedId: number | null = null;
@@ -103,8 +103,11 @@ export class MapCustomControl extends BaseFormControlWebComponent<string> {
     ]).subscribe(([groupsData, typesData]) => {
 
       if (groupsData && typesData) {
-        this.groups = groupsData.Items as Group[];
-        this.types = typesData.Items as Type[];
+        this.groups = groupsData.Items;
+        this.types = typesData.Items;
+
+        console.log(this.types)
+        console.log(this.groups)
 
         this.buildTree();
         this.cdr.detectChanges();

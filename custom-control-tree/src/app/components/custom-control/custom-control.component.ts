@@ -53,7 +53,7 @@ export type ReturnModelItem = ReturnModelItemGroup | ReturnModelItemType;
 })
 
 @Component({
-  selector: 'inka-ui-custom-pmdl-my-example',
+  selector: 'inka-ui-custom-tree',
   templateUrl: './custom-control.component.html',
   styleUrls: ['./custom-control.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush

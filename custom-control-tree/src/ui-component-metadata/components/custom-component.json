@@ -1,6 +1,6 @@
 {
-  "Name": "Мой кастомный компонент",
-  "Type": "custom-pmdl-my-example",
+  "Name": "custom-tree",
+  "Type": "custom-tree",
   "Properties": [{
       "Name": "ItemsGroup",
       "Type": "group",

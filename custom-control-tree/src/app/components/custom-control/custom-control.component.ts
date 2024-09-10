@@ -183,6 +183,7 @@ handleTypeClick(id: number) {
   onClickOutside(event: MouseEvent) {
     if (this.treeContainer && !this.treeContainer.nativeElement.contains(event.target)) {
       this.clearSelection();
+      this.emit('OutsideClick', this.returnModel[0])
     }
   }
 

@@ -44,3 +44,7 @@ li {
   width:21px; 
   height:20px;
 }
+
+.treeContainer{
+  width: fit-content;
+}

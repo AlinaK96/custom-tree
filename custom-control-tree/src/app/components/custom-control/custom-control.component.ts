@@ -60,6 +60,8 @@ export type ReturnModelItem = ReturnModelItemGroup | ReturnModelItemType;
 })
 
 export class MapCustomControl extends BaseFormControlWebComponent<string> {
+
+  expandedGroups: { [id: number]: boolean } = {};
   
 
   itemsGroup: WebComponentDatasource<unknown>;
@@ -106,9 +108,6 @@ export class MapCustomControl extends BaseFormControlWebComponent<string> {
         this.groups = groupsData.Items;
         this.types = typesData.Items;
 
-        console.log(this.types)
-        console.log(this.groups)
-
         this.buildTree();
         this.cdr.detectChanges();
       }
@@ -116,6 +115,10 @@ export class MapCustomControl extends BaseFormControlWebComponent<string> {
   }
 
   buildTree() {
+
+// Сохраняем текущее состояние развернутых групп
+    this.saveExpandedState();
+
     const groupMap = new Map<number, Group>();
     this.groups.forEach(group => groupMap.set(group.Id, group));
 
@@ -124,16 +127,36 @@ export class MapCustomControl extends BaseFormControlWebComponent<string> {
       .map(group => this.buildGroupTree(group, groupMap));
 
     this.attachTypesToGroups();
+
+    // Восстанавливаем состояние развертывания групп
+    this.restoreExpandedState();
   }
 
   buildGroupTree(group: Group, groupMap: Map<number, Group>): any {
-    return {
+    const groupNode = {
       ...group,
       children: this.groups
         .filter(child => child.ParentId === group.Id)
-        .map(child => this.buildGroupTree(child, groupMap))
+        .map(child => this.buildGroupTree(child, groupMap)),
+      isExpanded: this.expandedGroups[group.Id] || false // Устанавливаем состояние развертывания
     };
+
+    return groupNode;
   }
+
+    // Сохраняем состояние развертывания перед перестроением дерева
+    saveExpandedState() {
+      this.flattenTree(this.tree).forEach(group => {
+        this.expandedGroups[group.Id] = group.isExpanded;
+      });
+    }
+  
+    // Восстанавливаем состояние развертывания после перестроения дерева
+    restoreExpandedState() {
+      this.flattenTree(this.tree).forEach(group => {
+        group.isExpanded = this.expandedGroups[group.Id] || false;
+      });
+    }
 
   attachTypesToGroups() {
     const groupMap = new Map<number, any>();
@@ -161,10 +184,14 @@ export class MapCustomControl extends BaseFormControlWebComponent<string> {
 
 
 handleGroupClick(id: number, group: any) {
+  group.isExpanded = !group.isExpanded;
+  this.expandedGroups[id] = group.isExpanded; 
+
   this.selectedId = id;
   this.returnModel = [{ type: 'group', id: id, ParentId: group.ParentId }];
   this.emit("ClickItem", this.returnModel[0]);
-  group.isExpanded = !group.isExpanded;
+
+  this.cdr.markForCheck(); 
 }
 
 handleTypeClick(id: number) {
